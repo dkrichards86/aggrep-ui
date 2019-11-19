@@ -1,0 +1,19 @@
+export const SET_LOADING = 'SET_LOADING';
+
+export const STORE_POSTS = 'STORE_POSTS';
+
+export const ADD_FILTER = 'ADD_FILTER';
+export const REMOVE_FILTER = 'REMOVE_FILTER';
+
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+export const STORE_USER = 'STORE_USER';
+export const STORE_USER_CATEGORIES = 'STORE_USER_CATEGORIES';
+export const STORE_USER_SOURCES = 'STORE_USER_SOURCES';
+export const STORE_SOURCES = 'STORE_SOURCES';
+export const STORE_CATEGORIES = 'STORE_CATEGORIES';
+export const STORE_USER_BOOKMARKS = 'STORE_USER_BOOKMARKS';
+
+export const UPDATE_HYDRATING = 'UPDATE_HYDRATING';
+
+export const UPDATE_ALERT = 'UPDATE_ALERT';
