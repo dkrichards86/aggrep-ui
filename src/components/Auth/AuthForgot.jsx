@@ -38,7 +38,7 @@ const AuthReset = () => {
         setErrors({});
     };
 
-    const submit = () => {
+    const submit = async () => {
         const submissionErrors = {};
 
         if (isBlank(email)) {
@@ -49,8 +49,10 @@ const AuthReset = () => {
 
         if (isEmpty(submissionErrors)) {
             setErrors({});
-            dispatch(postAuthPasswordReset({ email }));
-            history.push("/");
+            try {
+                await dispatch(postAuthPasswordReset({ email }));
+                history.push("/");
+            } catch {}
         }
         else {
             setErrors(submissionErrors)

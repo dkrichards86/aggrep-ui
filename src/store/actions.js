@@ -9,7 +9,7 @@ import { BASE_URL } from '../constants';
 import { 
     STORE_POSTS, ADD_FILTER, REMOVE_FILTER, SET_LOADING, LOGIN, LOGOUT, STORE_USER, UPDATE_HYDRATING,
     STORE_USER_CATEGORIES, STORE_USER_SOURCES, STORE_SOURCES, STORE_CATEGORIES, UPDATE_ALERT,
-    STORE_USER_BOOKMARKS
+    STORE_USER_BOOKMARKS, BULK_SET_FILTERS
 } from './reducer_types';
 
 import { saveSetting } from './storage';
@@ -20,6 +20,7 @@ const ERROR = 'error';
 export const storePosts = createAction(STORE_POSTS);
 export const addFilter = createAction(ADD_FILTER);
 export const removeFilter = createAction(REMOVE_FILTER);
+export const bulkSetFilters = createAction(BULK_SET_FILTERS);
 export const setLoading = createAction(SET_LOADING);
 export const login = createAction(LOGIN);
 export const logout = createAction(LOGOUT);
@@ -31,7 +32,6 @@ export const storeCategories = createAction(STORE_CATEGORIES);
 export const storeSources = createAction(STORE_SOURCES);
 export const updateHydrating = createAction(UPDATE_HYDRATING);
 export const updateAlert = createAction(UPDATE_ALERT);
-
 
 export const hydrateStore = () => {
     return async (dispatch, getState) => {
@@ -86,18 +86,14 @@ export const clearAlert = () => {
     };
 };
 
-export const getPosts = (endpoint='posts', param=null) => {
+export const getPosts = () => {
     return async (dispatch, getState) => {
-        dispatch(setLoading(true));
-
         const state = getState();
         const filters = state.filters;
 
-        let args = []
+        dispatch(setLoading(true));
 
-        if (param) {
-            endpoint += `/${param}`;
-        }
+        let args = []
 
         if (filters.page) {
             args.push(`page=${filters.page}`);
@@ -107,11 +103,14 @@ export const getPosts = (endpoint='posts', param=null) => {
             args.push(`per_page=${filters.per_page}`);
         }
 
-        if (filters.sort && ['bookmarks', 'similar'].indexOf(endpoint) === -1) {
+        if (filters.sort && filters.endpoint !== 'bookmarks') {
             args.push(`sort=${filters.sort}`);
         }
 
-        let apiURL = `${BASE_URL}/${endpoint}`;
+        let apiURL = `${BASE_URL}/${filters.endpoint}`;
+        if (filters.slug) {
+            apiURL += `/${filters.slug}`;
+        }
 
         if (args.length) {
             apiURL += `?${args.join("&")}`;
@@ -290,6 +289,7 @@ export const postAuthLogin = (auth) => {
         }
         catch (err) {
             dispatch(setAlert({ message: err.msg, type: ERROR }));
+            throw new Error(err);
         }
     };
 };
@@ -304,6 +304,7 @@ export const postAuthRegister = (auth) => {
         }
         catch (err) {
             dispatch(setAlert({ message: err.msg, type: ERROR }));
+            throw new Error(err);
         }
     };
 };
@@ -327,6 +328,7 @@ export const postAuthPasswordUpdate = (auth) => {
         }
         catch (err) {
             dispatch(setAlert({ message: err.msg, type: ERROR }));
+            throw new Error(err);
         }
     };
 };
@@ -341,6 +343,7 @@ export const postAuthPasswordReset = (payload) => {
         }
         catch (err) {
             dispatch(setAlert({ message: err.msg, type: ERROR }));
+            throw new Error(err);
         }
     };
 };
@@ -357,6 +360,7 @@ export const postAuthEmailUpdate = (payload) => {
         }
         catch (err) {
             dispatch(setAlert({ message: err.msg, type: ERROR }));
+            throw new Error(err);
         }
     };
 }
@@ -402,6 +406,7 @@ export const postAuthPasswordResetConfirm = (payload) => {
         }
         catch (err) {
             dispatch(setAlert({ message: err.msg, type: ERROR }));
+            throw new Error(err);
         }
     };
 };

@@ -1,4 +1,4 @@
-const STORAGE_PREFIX = 'ticker_storage';
+const STORAGE_PREFIX = 'aggrep_storage';
 
 const generate_storage_key = (key) => `${STORAGE_PREFIX}_${key}`;
 

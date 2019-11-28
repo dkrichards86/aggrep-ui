@@ -2,11 +2,16 @@
   "name": "aggrep-ui",
   "version": "0.1.0",
   "private": true,
-  "homepage": "",
+  "license": "MIT",
+  "homepage": "https://www.aggregatereport.com",
   "dependencies": {
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-react": "^7.7.0",
+    "@babel/register": "^7.7.0",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "@material-ui/core": "4.6.1",
     "classnames": "^2.2.6",
+    "ignore-styles": "^5.0.1",
     "immutability-helper": "3.0.1",
     "lodash": "4.17.15",
     "moment": "2.24.0",
@@ -29,16 +34,13 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "enzyme-to-json": "^3.4.3",
-    "gh-pages": "^2.1.1",
     "react-test-renderer": "^16.11.0",
     "redux-mock-store": "^1.5.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "test": "react-scripts test",
+    "test": "CI=true react-scripts test --coverage --env=jsdom",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

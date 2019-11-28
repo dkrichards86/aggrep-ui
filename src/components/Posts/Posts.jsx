@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import isEqual from 'lodash/isEqual';
 import { makeStyles } from '@material-ui/core/styles';
 
 import ViewTitle from 'components/Common/ViewTitle';
 import PostsList from "components/Posts/PostsList";
 import PostSort from 'components/Posts/PostSort';
+import isEqual from 'lodash/isEqual';
 
-import { getPosts } from 'store/actions';
+import { getPosts, bulkSetFilters } from 'store/actions';
 
 const useStyles = makeStyles(() => ({
     content: {
@@ -26,40 +26,35 @@ const useStyles = makeStyles(() => ({
 const Posts = ({ endpoint, hideSort }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const isHydrating = useSelector(state => state.isHydrating);
     const categoryTitle = useSelector(state => state.posts.title);
     const loading = useSelector(state => state.loading);
     const filters = useSelector(state => state.filters);
     const { slug } = useParams();
 
-    const updatePosts = useCallback(() => {
-        dispatch(getPosts(endpoint, slug));
-    }, [dispatch, endpoint, slug]);
+    useEffect(() => {
+        if (endpoint !== filters.endpoint || slug !== filters.slug) {
+            dispatch(bulkSetFilters({
+                endpoint,
+                slug,
+                page: 1,
+                per_page: filters.per_page,
+                sort: filters.sort,
+            }));
+        }
+    }, [endpoint, slug, filters, dispatch]); 
 
-    const prevSlug = useRef(slug);
-    const prevEndpoint = useRef(endpoint);
     const prevFilters = useRef(filters);
-    const prevHydrating = useRef(isHydrating);
     useEffect(() => {
         let shouldFetch = false;
-        if (endpoint !== prevEndpoint) {
-            shouldFetch = true;
-            prevEndpoint.current = endpoint;
-        } else if (slug !== prevSlug) {
-            shouldFetch = true;
-            prevSlug.current = slug;
-        } else if (!isEqual(filters, prevFilters)) {
-            shouldFetch = true;
+        if (!isEqual(filters, prevFilters.current)) {
             prevFilters.current = filters;
-        } else if (isHydrating !== prevHydrating) {
             shouldFetch = true;
-            prevHydrating.current = isHydrating;
         }
 
         if (shouldFetch) {
-            updatePosts(endpoint, slug);
+            dispatch(getPosts());
         }
-    }, [endpoint, isHydrating, slug, filters, updatePosts]); 
+    }, [filters, dispatch]);
 
     return (
         <div className={classes.content}>

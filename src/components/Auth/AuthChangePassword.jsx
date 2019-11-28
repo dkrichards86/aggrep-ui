@@ -34,7 +34,7 @@ const AuthChangePassword = () => {
         setErrors({});
     };
 
-    const submit = () => {
+    const submit = async () => {
         const submissionErrors = {};
 
         if (isBlank(password)) {
@@ -62,8 +62,10 @@ const AuthChangePassword = () => {
                 new_password: changed,
                 password_confirm: confirmed
             };
-            dispatch(postAuthPasswordUpdate(payload));
-            history.push("/");
+            try {
+                await dispatch(postAuthPasswordUpdate(payload));
+                history.push("/");
+            } catch {}
         }
         else {
             setErrors(submissionErrors);

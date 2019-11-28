@@ -12,8 +12,8 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import 'typeface-roboto';
 import 'typeface-quicksand';
 import Routes from './router/Routes';
-import reducers from "./store/reducers";
-import { hydrateStore } from './store/actions';
+import reducers from "store/reducers";
+import { hydrateStore } from 'store/actions';
 import * as serviceWorker from './serviceWorker';
 
 const theme = createMuiTheme({
@@ -51,4 +51,4 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
-serviceWorker.unregister();
+serviceWorker.register();

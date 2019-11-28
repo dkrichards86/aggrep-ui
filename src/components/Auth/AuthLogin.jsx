@@ -32,7 +32,7 @@ const AuthLogin = () => {
         setErrors({});
     };
 
-    const submit = () => {
+    const submit = async () => {
         const submissionErrors = {};
 
         if (isBlank(email)) {
@@ -47,7 +47,9 @@ const AuthLogin = () => {
 
         if (isEmpty(submissionErrors)) {
             setErrors({});
-            dispatch(postAuthLogin({ email, password }));
+            try {
+                await dispatch(postAuthLogin({ email, password }));
+            } catch {}
         }
         else {
             setErrors(submissionErrors)

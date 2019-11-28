@@ -34,7 +34,7 @@ const AuthRegister = () => {
         setErrors({});
     };
 
-    const submit = () => {
+    const submit = async () => {
         const submissionErrors = {};
 
         if (isBlank(email)) {
@@ -62,8 +62,10 @@ const AuthRegister = () => {
             const payload = {
                 email, password, password_confirm: confirmed
             };
-            dispatch(postAuthRegister(payload));
-            history.push("/");
+            try {
+                await dispatch(postAuthRegister(payload));
+                history.push("/");
+            } catch {}
         }
         else {
             setErrors(submissionErrors)

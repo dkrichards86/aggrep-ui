@@ -37,9 +37,10 @@ const UnauthRoute = ({ component: Component, authenticated, redirectTo, ...rest 
         )}/>
 );
 
+const AllPosts = (props) => <Posts {...props} endpoint="posts" />;
 const Categories = (props) => <Posts {...props} endpoint="category" />;
 const Sources = (props) => <Posts {...props} endpoint="source" />;
-const SimilarPosts = (props) => <Posts {...props} endpoint="similar" hideSort />;
+const SimilarPosts = (props) => <Posts {...props} endpoint="similar" />;
 const Bookmarks = (props) => <Posts {...props} endpoint="bookmarks" hideSort />;
 
 const Routes = () => {
@@ -50,7 +51,7 @@ const Routes = () => {
             <Route
                 exact
                 path="/"
-                component={Posts} />
+                component={AllPosts} />
             <Route
                 path="/category/:slug"
                 component={Categories} />

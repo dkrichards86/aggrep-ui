@@ -72,6 +72,7 @@ const Layout = ({ children }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { pathname } = useLocation();
+    const pageNumber = useSelector(state => state.posts.page);
     const auth = useSelector(state => state.auth);
     const alert = useSelector(state => state.alert);
     const isHydrating = useSelector(state => state.hydrating);
@@ -81,7 +82,8 @@ const Layout = ({ children }) => {
     useEffect(() => {
         window.scrollTo(0, 0);
         handleClose();
-    }, [pathname]);
+        setMobileOpen(false);
+    }, [pathname, pageNumber]);
 
     const handleClick = event => {
         setAnchor(event.currentTarget);

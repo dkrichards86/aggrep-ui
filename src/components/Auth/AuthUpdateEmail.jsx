@@ -30,7 +30,7 @@ const AuthUpdateEmail = () => {
         setErrors({});
     };
 
-    const submit = () => {
+    const submit = async () => {
         const submissionErrors = {};
 
         if (isBlank(email)) {
@@ -41,8 +41,10 @@ const AuthUpdateEmail = () => {
 
         if (isEmpty(submissionErrors)) {
             setErrors({});
-            dispatch(postAuthEmailUpdate({ email }));
-            history.push("/");
+            try {
+                await dispatch(postAuthEmailUpdate({ email }));
+                history.push("/");
+            } catch {}
         }
         else {
             setErrors(submissionErrors)

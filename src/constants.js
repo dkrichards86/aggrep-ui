@@ -1,1 +1,3 @@
-export const BASE_URL = 'http://0.0.0.0:5000/api/v1';
+export const BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+export const DEFAULT_SORT = 'latest';
+export const DEFAULT_PER_PAGE = 20;

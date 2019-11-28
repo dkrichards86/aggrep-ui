@@ -33,7 +33,7 @@ const AuthReset = ({match}) => {
         setErrors({});
     };
 
-    const submit = () => {
+    const submit = async () => {
         const submissionErrors = {};
 
         if (isBlank(changed)) {
@@ -56,8 +56,10 @@ const AuthReset = ({match}) => {
             const payload = {
                 token: token, new_password: changed, password_confirm: confirmed
             };
-            dispatch(postAuthPasswordResetConfirm(payload));
-            history.push("/login");
+            try {
+                await dispatch(postAuthPasswordResetConfirm(payload));
+                history.push("/login");
+            } catch {}
         }
         else {
             setErrors(submissionErrors)

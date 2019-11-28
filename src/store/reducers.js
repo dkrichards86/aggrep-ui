@@ -4,17 +4,19 @@ import { handleActions } from 'redux-actions';
 import { 
     STORE_POSTS, ADD_FILTER, REMOVE_FILTER, SET_LOADING, LOGIN, LOGOUT, STORE_USER,
     UPDATE_HYDRATING, STORE_USER_CATEGORIES, STORE_USER_SOURCES, STORE_SOURCES, STORE_CATEGORIES,
-    UPDATE_ALERT, STORE_USER_BOOKMARKS
+    UPDATE_ALERT, STORE_USER_BOOKMARKS, BULK_SET_FILTERS
 } from './reducer_types';
-
-import { loadSetting, removeSetting, saveSetting } from './storage';
+import { DEFAULT_SORT, DEFAULT_PER_PAGE } from '../constants';
+import { loadSetting, removeSetting, saveSetting } from 'store/storage';
 
 const initialState = {
     auth: loadSetting('auth'),
     filters: {
+        endpoint: 'posts',
+        slug: null,
         page: 1,
-        per_page: loadSetting('per_page') || 20,
-        sort: loadSetting('sort') || 'latest',
+        per_page: loadSetting('per_page') || DEFAULT_PER_PAGE,
+        sort: loadSetting('sort') || DEFAULT_SORT,
     },
     loading: true,
     hydrating: true,
@@ -80,6 +82,13 @@ const reducers = handleActions({
                 [action.payload]: {
                     $set: null
                 }
+            }
+        })
+    },
+    [BULK_SET_FILTERS]: (state, action) => {
+        return update(state, {
+            filters: {
+                $set: action.payload
             }
         })
     },

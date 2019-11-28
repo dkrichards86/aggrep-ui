@@ -8,7 +8,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 
-import { postView, postBookmark, deleteBookmark } from 'store/actions';
+import { postBookmark, deleteBookmark } from 'store/actions';
 
 const useStyles = makeStyles(theme => ({
     link: {
@@ -32,29 +32,25 @@ const PostListItem = ({ post }) => {
     const dispatch = useDispatch();
     const userBookmarks = useSelector(state => state.user.bookmarks);
     const auth = useSelector(state => state.auth);
-    const [bookmark, setBookmark] = useState(userBookmarks.indexOf(post.id) !== -1);
+    const uid = post.uid;
+    const [bookmark, setBookmark] = useState(userBookmarks.indexOf(uid) !== -1);
 
     const prevBookmark = useRef(bookmark);
     useEffect(() => {
         if (prevBookmark !== bookmark) {
-            setBookmark(userBookmarks.indexOf(post.id) !== -1);
+            setBookmark(userBookmarks.indexOf(uid) !== -1);
             prevBookmark.current = bookmark;
         }
-    }, [userBookmarks, bookmark]); 
-
-    const handleView = () => {
-        dispatch(postView({ post_id: post.id }));
-    };
+    }, [userBookmarks, bookmark, uid]); 
 
     const handleBookmark = () => {
         const action = bookmark ? deleteBookmark : postBookmark;
         setBookmark(!bookmark);
-        dispatch(action({ post_id: post.id }));
+        dispatch(action({ uid: uid }));
     };
 
     const postTitle = (
         <a
-            onClick={() => handleView()}
             href={post.link}
             target="_blank"
             rel="noopener noreferrer"
@@ -67,7 +63,7 @@ const PostListItem = ({ post }) => {
         similarLink = (
             <React.Fragment>
                 &nbsp;&bull;&nbsp;
-                <Link to={`/similar/${post.id}`} className={classes.detailLink}>
+                <Link to={`/similar/${post.uid}`} className={classes.detailLink}>
                     Related Posts
                 </Link>
             </React.Fragment>

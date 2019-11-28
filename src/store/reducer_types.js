@@ -4,6 +4,7 @@ export const STORE_POSTS = 'STORE_POSTS';
 
 export const ADD_FILTER = 'ADD_FILTER';
 export const REMOVE_FILTER = 'REMOVE_FILTER';
+export const BULK_SET_FILTERS = 'BULK_SET_FILTERS';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';

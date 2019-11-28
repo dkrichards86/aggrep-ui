@@ -1,11 +1,14 @@
 import React from 'react';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { 
     Divider, Drawer, Hidden, Icon, List, ListItem, ListItemText, ListItemIcon
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
+
+import { getPosts } from 'store/actions';
 
 const DRAWER_WIDTH = 280;
 
@@ -45,10 +48,18 @@ const WrapperDrawer = ({ open, handleToggle }) => {
     const auth = useSelector(state => state.auth);
     const categories = useSelector(state => state.categories);
     const userCategories = useSelector(state => state.user.categories);
+    const dispatch = useDispatch();
+    const { pathname } = useLocation();
 
     let shownCategories = categories;
     if (auth) {
         shownCategories = categories.filter(c => userCategories.indexOf(c.id) !== -1);
+    }
+
+    const handleCategoryClick = (to) => {
+        if (pathname === to) {
+            dispatch(getPosts());
+        }
     }
 
     const content = (
@@ -58,7 +69,9 @@ const WrapperDrawer = ({ open, handleToggle }) => {
                 className={classes.drawerLink}
                 to="/">
                 <ListItemIcon>
-                    <Icon fontSize="small" className={classNames('fas fa-home', classes.icon)} />
+                    <Icon
+                        fontSize="small"
+                        className={classNames('fas fa-home', classes.icon)} />
                 </ListItemIcon>
                 <ListItemText primary="Home" />
             </ListItem>
@@ -68,9 +81,12 @@ const WrapperDrawer = ({ open, handleToggle }) => {
                     key={`drawer-category-${c.slug}`}
                     component={Link} 
                     className={classes.drawerLink}
+                    onClick={() => handleCategoryClick(`/category/${c.slug}`)}
                     to={`/category/${c.slug}`}>
                     <ListItemIcon>
-                        <Icon fontSize="small" className={classNames('fas', ICON_MAP[c.slug], classes.icon)} />
+                        <Icon
+                            fontSize="small"
+                            className={classNames('fas', ICON_MAP[c.slug], classes.icon)} />
                     </ListItemIcon>
                     <ListItemText primary={c.title} />
                 </ListItem>
