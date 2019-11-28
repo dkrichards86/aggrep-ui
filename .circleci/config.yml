@@ -25,9 +25,9 @@ jobs:
           name: Build
           command: npm run build
       - save_cache:
-          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          key: v1-build-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
-            - dist
+            - build
   deploy:
     docker:
       - image: circleci/python:3.6.8-stretch
@@ -36,9 +36,9 @@ jobs:
           name: Show current branch
           command: echo ${CIRCLE_BRANCH}
       - restore_cache:
-          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          key: v1-build-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       - aws-s3/sync:
-          from: dist
+          from: build
           to: 's3://www.aggregatereport.com'
           arguments: |
             --acl public-read \
