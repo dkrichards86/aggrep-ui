@@ -5,6 +5,8 @@ jobs:
   build:
     docker:
       - image: circleci/node:12.13.1
+    environment:
+        REACT_APP_API_ENDPOINT: https://api.aggregatereport.com/v1
     steps:
       - checkout
       - restore_cache:
