@@ -19,13 +19,14 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key:
+            - v1-dependencies-{{ checksum "package.json" }}
       - run: 
           name: Test
           command: npm run test
       - run:
           name: Build
-          command: npm run build
+          command: REACT_APP_API_ENDPOINT=https://api.aggregatereport.com/v1 npm run build
       - save_cache:
           key: v1-build-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
