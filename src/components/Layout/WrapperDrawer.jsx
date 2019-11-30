@@ -47,14 +47,8 @@ const WrapperDrawer = ({ open, handleToggle }) => {
     const classes = useStyles();
     const auth = useSelector(state => state.auth);
     const categories = useSelector(state => state.categories);
-    const userCategories = useSelector(state => state.user.categories);
     const dispatch = useDispatch();
     const { pathname } = useLocation();
-
-    let shownCategories = categories;
-    if (auth) {
-        shownCategories = categories.filter(c => userCategories.indexOf(c.id) !== -1);
-    }
 
     const handleCategoryClick = (to) => {
         if (pathname === to) {
@@ -76,7 +70,7 @@ const WrapperDrawer = ({ open, handleToggle }) => {
                 <ListItemText primary="Home" />
             </ListItem>
             <Divider />
-            {shownCategories.map(c => (
+            {categories.map(c => (
                 <ListItem
                     key={`drawer-category-${c.slug}`}
                     component={Link} 
