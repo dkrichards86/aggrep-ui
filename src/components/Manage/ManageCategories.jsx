@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import isEqual from 'lodash/isEqual'
 import { postMangeCategories } from "store/actions";
 import {
-  Button, Paper, List, ListItem, ListItemIcon, ListItemText, Checkbox
+  Button, Paper, List, ListItem, ListItemIcon, ListItemText, Checkbox, Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ViewTitle from 'components/Common/ViewTitle';
@@ -68,6 +68,10 @@ const ManageCategories = () => {
     return (
         <div className={classes.root}>
             <ViewTitle title="Manage your Preferred Categories" />
+            <Typography gutterBottom>
+                Choose preferred categories from the list below. Excluded categories will be
+                omitted from your home page and any source pages.
+            </Typography>
             <Paper>
                 <List dense>
                 {categories.map(cat => (
