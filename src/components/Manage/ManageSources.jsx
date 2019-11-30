@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import isEqual from 'lodash/isEqual'
 import { postMangeSources } from "store/actions";
 import {
-  Button, Paper, List, ListItem, ListItemIcon, ListItemText, Checkbox, TablePagination
+  Button, Paper, List, ListItem, ListItemIcon, ListItemText, Checkbox, TablePagination, Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ViewTitle from 'components/Common/ViewTitle';
@@ -72,6 +72,10 @@ const ManageSources = () => {
     return (
         <div className={classes.root}>
             <ViewTitle title="Manage your Preferred Sources" />
+            <Typography gutterBottom>
+                Choose preferred news sources from the list below. Excluded sources will be
+                omitted from your home page and any category pages.
+            </Typography>
             <Paper>
                 <List dense>
                 {slice.map(src => (
