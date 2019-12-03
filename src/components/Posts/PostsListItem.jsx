@@ -30,8 +30,8 @@ const useStyles = makeStyles(theme => ({
 const PostListItem = ({ post }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const userBookmarks = useSelector(state => state.user.bookmarks);
-    const auth = useSelector(state => state.auth);
+    const userBookmarks = useSelector(state => state.app.user.bookmarks);
+    const auth = useSelector(state => state.app.auth);
     const uid = post.uid;
     const [bookmark, setBookmark] = useState(userBookmarks.indexOf(uid) !== -1);
 

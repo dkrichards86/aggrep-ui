@@ -38,8 +38,8 @@ export const hydrateStore = () => {
         const state = getState();
         await dispatch(getCategories());
         await dispatch(getSources());
-        if (!isNil(state.auth)) {
-            const token = get(state.auth, 'access_token');
+        if (!isNil(state.app.auth)) {
+            const token = get(state.app.auth, 'access_token');
             await dispatch(getAuthTokenConfirm());
             await dispatch(hydrateUser(token));
         }
@@ -89,7 +89,7 @@ export const clearAlert = () => {
 export const getPosts = () => {
     return async (dispatch, getState) => {
         const state = getState();
-        const filters = state.filters;
+        const filters = state.app.filters;
 
         dispatch(setLoading(true));
 
@@ -116,7 +116,7 @@ export const getPosts = () => {
             apiURL += `?${args.join("&")}`;
         }
 
-        const token = get(state.auth, 'access_token');
+        const token = get(state.app.auth, 'access_token');
         try {
             const data = await fetcher(apiURL, withAuthToken(getConfig(), token));
             dispatch(storePosts(data));
@@ -134,7 +134,7 @@ export const postView = (payload) => {
 
     return async (dispatch, getState) => {
         const state = getState();
-        const token = get(state.auth, 'access_token');
+        const token = get(state.app.auth, 'access_token');
         try {
             return fetcher(apiURL, withAuthToken(postConfig(payload), token));
         }
@@ -162,7 +162,7 @@ export const postBookmark = (payload) => {
 
     return async (dispatch, getState) => {
         const state = getState();
-        const token = get(state.auth, 'access_token');
+        const token = get(state.app.auth, 'access_token');
         try {
             const data = await fetcher(apiURL, withAuthToken(postConfig(payload), token));
             dispatch(storeUserBookmarks(data.bookmarks));
@@ -179,7 +179,7 @@ export const deleteBookmark = (payload) => {
 
     return async (dispatch, getState) => {
         const state = getState();
-        const token = get(state.auth, 'access_token');
+        const token = get(state.app.auth, 'access_token');
         try {
             const data = await fetcher(apiURL, withAuthToken(deleteConfig(payload), token));
             dispatch(storeUserBookmarks(data.bookmarks));
@@ -236,7 +236,7 @@ export const postMangeCategories = (payload) => {
     const apiURL = `${BASE_URL}/manage/categories`;
     return async (dispatch, getState) => {
         const state = getState();
-        const token = get(state.auth, 'access_token');
+        const token = get(state.app.auth, 'access_token');
         try {
             const data = await fetcher(apiURL, withAuthToken(postConfig(payload), token));
             dispatch(storeUserCategories(data.included_categories));
@@ -265,7 +265,7 @@ export const postMangeSources = (payload) => {
     const apiURL = `${BASE_URL}/manage/sources`;
     return async (dispatch, getState) => {
         const state = getState();
-        const token = get(state.auth, 'access_token');
+        const token = get(state.app.auth, 'access_token');
         try {
             const data = await fetcher(apiURL, withAuthToken(postConfig(payload), token));
             dispatch(storeUserSources(data.included_sources));
@@ -321,7 +321,7 @@ export const postAuthPasswordUpdate = (auth) => {
 
     return async (dispatch, getState) => {
         const state = getState();
-        const token = get(state.auth, 'access_token');
+        const token = get(state.app.auth, 'access_token');
         try {
             const data = await fetcher(apiURL, withAuthToken(postConfig(auth), token));
             dispatch(setAlert({ message: data.msg, type: INFO }));
@@ -352,7 +352,7 @@ export const postAuthEmailUpdate = (payload) => {
     const apiURL = `${BASE_URL}/auth/email/update`;
     return async (dispatch, getState) => {
         const state = getState();
-        const token = get(state.auth, 'access_token');
+        const token = get(state.app.auth, 'access_token');
         try {
             const data = await fetcher(apiURL, withAuthToken(postConfig(payload), token));
             dispatch(login(data.auth));
@@ -370,7 +370,7 @@ export const postAuthEmailConfirmRequest = () => {
 
     return async (dispatch, getState) => {
         const state = getState();
-        const token = get(state.auth, 'access_token');
+        const token = get(state.app.auth, 'access_token');
         try {
             const data = await fetcher(apiURL, withAuthToken(postConfig({}), token));
             dispatch(setAlert({ message: data.msg, type: INFO }));
@@ -386,7 +386,7 @@ export const postAuthEmailConfirmToken = (payload) => {
 
     return async (dispatch, getState) => {
         const state = getState();
-        const token = get(state.auth, 'access_token');
+        const token = get(state.app.auth, 'access_token');
         try {
             const data = await fetcher(apiURL, withAuthToken(postConfig(payload), token));
             dispatch(setAlert({ message: data.msg, type: INFO }));
@@ -415,7 +415,7 @@ export const getAuthTokenConfirm = () => {
     const apiURL = `${BASE_URL}/auth/token/confirm`;
     return async (dispatch, getState) => {
         const state = getState();
-        const token = get(state.auth, 'access_token');
+        const token = get(state.app.auth, 'access_token');
         try {
             const data = await fetcher(apiURL, withAuthToken(getConfig(), token));
             await dispatch(hydrateUser(data.access_token));

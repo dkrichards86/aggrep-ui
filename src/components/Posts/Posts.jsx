@@ -26,9 +26,9 @@ const useStyles = makeStyles(() => ({
 const Posts = ({ endpoint, hideSort }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const categoryTitle = useSelector(state => state.posts.title);
-    const loading = useSelector(state => state.loading);
-    const filters = useSelector(state => state.filters);
+    const categoryTitle = useSelector(state => state.app.posts.title);
+    const loading = useSelector(state => state.app.loading);
+    const filters = useSelector(state => state.app.filters);
     const { slug } = useParams();
 
     useEffect(() => {

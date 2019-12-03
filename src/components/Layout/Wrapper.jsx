@@ -72,10 +72,10 @@ const Layout = ({ children }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { pathname } = useLocation();
-    const pageNumber = useSelector(state => state.posts.page);
-    const auth = useSelector(state => state.auth);
-    const alert = useSelector(state => state.alert);
-    const isHydrating = useSelector(state => state.hydrating);
+    const pageNumber = useSelector(state => state.app.posts.page);
+    const auth = useSelector(state => state.app.auth);
+    const alert = useSelector(state => state.app.alert);
+    const isHydrating = useSelector(state => state.app.hydrating);
     const [menuAnchor, setAnchor] = useState(null);
     const [mobileOpen, setMobileOpen] = useState(false);
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
+import { trackEvent } from '@redux-beacon/google-analytics-gtag';
 import { makeStyles } from '@material-ui/core/styles';
 import isEmpty from 'lodash/isEmpty';
 import Form from 'components/Common/Form';
@@ -64,6 +65,7 @@ const AuthRegister = () => {
             };
             try {
                 await dispatch(postAuthRegister(payload));
+                trackEvent(_ => ({category: 'engagement', action: 'sign_up'}));
                 history.push("/");
             } catch {}
         }

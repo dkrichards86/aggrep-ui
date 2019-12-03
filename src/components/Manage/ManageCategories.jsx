@@ -27,8 +27,8 @@ const ManageCategories = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const categories = useSelector(state => state.categories);
-    const userCategories = useSelector(state => state.user.categories);
+    const categories = useSelector(state => state.app.categories);
+    const userCategories = useSelector(state => state.app.user.categories);
     const [checked, setChecked] = useState([]);
 
     const prevList = useRef(checked);

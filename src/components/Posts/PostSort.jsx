@@ -22,7 +22,7 @@ const SORT_OPTIONS = [
 const PostSort = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const sortState = useSelector(state => state.filters.sort);
+    const sortState = useSelector(state => state.app.filters.sort);
     const [sort, setSort] = useState('latest');
 
     const prevList = useRef(sort);

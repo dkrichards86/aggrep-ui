@@ -45,8 +45,8 @@ const ICON_MAP = {
 
 const WrapperDrawer = ({ open, handleToggle }) => {
     const classes = useStyles();
-    const auth = useSelector(state => state.auth);
-    const categories = useSelector(state => state.categories);
+    const auth = useSelector(state => state.app.auth);
+    const categories = useSelector(state => state.app.categories);
     const dispatch = useDispatch();
     const { pathname } = useLocation();
 

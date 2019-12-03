@@ -16,10 +16,10 @@ const useStyles = makeStyles(() => ({
 const PostPagination = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const numPages = useSelector(state => state.posts.total_pages);
-    const postCount = useSelector(state => state.posts.total_items);
-    const perPage = useSelector(state => state.posts.per_page);
-    const pageNumber = useSelector(state => state.posts.page);
+    const numPages = useSelector(state => state.app.posts.total_pages);
+    const postCount = useSelector(state => state.app.posts.total_items);
+    const perPage = useSelector(state => state.app.posts.per_page);
+    const pageNumber = useSelector(state => state.app.posts.page);
 
     const handleChangePage = (_, newPage) => {
         dispatch(setFilter('page', newPage + 1));
