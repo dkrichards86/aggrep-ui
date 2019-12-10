@@ -65,12 +65,16 @@ const PostListItem = ({ post }) => {
 
     const handleModalOpen = () => {
         setModalOpen(true);
+<<<<<<< HEAD
         handleMenuClose();
+=======
+>>>>>>> master
     };
     
     const handleModalClose = () => {
         setModalOpen(false);
     };
+<<<<<<< HEAD
 
     const handleMenuOpen = event => {
         setMenuAnchor(event.currentTarget);
@@ -79,6 +83,8 @@ const PostListItem = ({ post }) => {
     const handleMenuClose = () => {
         setMenuAnchor(null);
     };
+=======
+>>>>>>> master
 
     const handleBookmark = () => {
         if (auth) {
@@ -131,9 +137,24 @@ const PostListItem = ({ post }) => {
             <ListItem>
                 <ListItemText primary={postTitle} secondary={secondary} />
                     <ListItemSecondaryAction>
+<<<<<<< HEAD
                         <IconButton onClick={handleMenuOpen} color="primary">
                             <Icon fontSize="small" className={classNames('fas fa-ellipsis-v')} />
+=======
+                        <IconButton onClick={handleModalOpen} color="primary">
+                            <Icon fontSize="small" className={classNames('fas fa-share-alt')} />
+>>>>>>> master
                         </IconButton>
+                        {auth && (
+                            <IconButton onClick={handleBookmark} color="primary">
+                                {bookmark ? (
+                                    <Icon fontSize="small" className={classNames('fas fa-bookmark')} />
+                                ) : (
+                                    <Icon fontSize="small" className={classNames('far fa-bookmark')} />
+                                )}
+                            </IconButton>
+                        )}
+                        {modalOpen && <PostsListItemModal post={post} onClose={handleModalClose} />}
                     </ListItemSecondaryAction>
             </ListItem>
             {modalOpen && <PostsListItemModal post={post} onClose={handleModalClose} />}
