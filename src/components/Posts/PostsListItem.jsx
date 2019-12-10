@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    Icon, IconButton, ListItem, ListItemText, ListItemSecondaryAction
+    Icon, IconButton, ListItem, ListItemText, ListItemSecondaryAction, Menu, MenuItem
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -46,8 +46,9 @@ const useStyles = makeStyles(theme => ({
 
 const PostListItem = ({ post }) => {
     const classes = useStyles();
-    const [modalOpen, setModalOpen] = React.useState(false);
-
+    const [menuAnchor, setMenuAnchor] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
+    const history = useHistory();
     const dispatch = useDispatch();
     const userBookmarks = useSelector(state => state.app.user.bookmarks);
     const auth = useSelector(state => state.app.auth);
@@ -64,16 +65,35 @@ const PostListItem = ({ post }) => {
 
     const handleModalOpen = () => {
         setModalOpen(true);
+<<<<<<< HEAD
+        handleMenuClose();
+=======
+>>>>>>> master
     };
     
     const handleModalClose = () => {
         setModalOpen(false);
     };
+<<<<<<< HEAD
+
+    const handleMenuOpen = event => {
+        setMenuAnchor(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setMenuAnchor(null);
+    };
+=======
+>>>>>>> master
 
     const handleBookmark = () => {
-        const action = bookmark ? deleteBookmark : postBookmark;
-        setBookmark(!bookmark);
-        dispatch(action({ uid: uid }));
+        if (auth) {
+            const action = bookmark ? deleteBookmark : postBookmark;
+            setBookmark(!bookmark);
+            dispatch(action({ uid: uid }));
+        } else {
+            history.push("/login");
+        }
     };
 
     const postTitle = (
@@ -117,8 +137,13 @@ const PostListItem = ({ post }) => {
             <ListItem>
                 <ListItemText primary={postTitle} secondary={secondary} />
                     <ListItemSecondaryAction>
+<<<<<<< HEAD
+                        <IconButton onClick={handleMenuOpen} color="primary">
+                            <Icon fontSize="small" className={classNames('fas fa-ellipsis-v')} />
+=======
                         <IconButton onClick={handleModalOpen} color="primary">
                             <Icon fontSize="small" className={classNames('fas fa-share-alt')} />
+>>>>>>> master
                         </IconButton>
                         {auth && (
                             <IconButton onClick={handleBookmark} color="primary">
@@ -132,6 +157,20 @@ const PostListItem = ({ post }) => {
                         {modalOpen && <PostsListItemModal post={post} onClose={handleModalClose} />}
                     </ListItemSecondaryAction>
             </ListItem>
+            {modalOpen && <PostsListItemModal post={post} onClose={handleModalClose} />}
+            <Menu
+                anchorEl={menuAnchor}
+                keepMounted
+                open={Boolean(menuAnchor)}
+                onClose={handleMenuClose}>
+                <MenuItem component='a' href={post.link}>View Article</MenuItem>
+                <MenuItem onClick={handleModalOpen}>
+                    Share Article
+                </MenuItem>
+                <MenuItem onClick={handleBookmark}>
+                    {bookmark ? "Remove Bookmark" : "Bookmark"}
+                </MenuItem>
+            </Menu>
         </React.Fragment>
     );
 }
