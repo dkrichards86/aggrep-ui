@@ -44,7 +44,7 @@ const SimilarPosts = (props) => <Posts {...props} endpoint="similar" />;
 const Bookmarks = (props) => <Posts {...props} endpoint="bookmarks" hideSort />;
 
 const Routes = () => {
-    const isAuthenticated = useSelector(state => !!state.auth); 
+    const isAuthenticated = useSelector(state => !!state.app.auth); 
     
     return (
         <div>

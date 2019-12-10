@@ -8,8 +8,8 @@ import PostsListItemEmpty from 'components/Posts/PostsListItemEmpty';
 import PostsPagination from 'components/Posts/PostsPagination'
 
 const PostList = () => {
-    const posts = useSelector(state => state.posts.items);
-    const loading = useSelector(state => state.loading);
+    const posts = useSelector(state => state.app.posts.items);
+    const loading = useSelector(state => state.app.loading);
 
     let content;
     if (!loading && posts.length > 0) {

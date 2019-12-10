@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { Link } from 'react-router-dom';
+import { trackEvent } from '@redux-beacon/google-analytics-gtag';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import isEmpty from 'lodash/isEmpty';
@@ -49,6 +50,7 @@ const AuthLogin = () => {
             setErrors({});
             try {
                 await dispatch(postAuthLogin({ email, password }));
+                trackEvent(_ => ({category: 'engagement', action: 'login'}));
             } catch {}
         }
         else {

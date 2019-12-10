@@ -1,5 +1,7 @@
+import { combineReducers } from 'redux'
 import update from 'immutability-helper';
 import { handleActions } from 'redux-actions';
+import { connectRouter } from 'connected-react-router'
 
 import { 
     STORE_POSTS, ADD_FILTER, REMOVE_FILTER, SET_LOADING, LOGIN, LOGOUT, STORE_USER,
@@ -158,4 +160,9 @@ const reducers = handleActions({
     },
 }, initialState);
 
-export default reducers;
+const createRootReducer = (history) => combineReducers({
+    router: connectRouter(history),
+    app: reducers,
+});
+
+export default createRootReducer;

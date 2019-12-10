@@ -27,8 +27,8 @@ const ManageSources = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const sources = useSelector(state => state.sources);
-    const userSources = useSelector(state => state.user.sources);
+    const sources = useSelector(state => state.app.sources);
+    const userSources = useSelector(state => state.user.app.sources);
     const [checked, setChecked] = useState([]);
     const [page, setPage] = useState(0);
     const perPage = 10;
