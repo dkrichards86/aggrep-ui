@@ -6,11 +6,28 @@ import {
     Icon, IconButton, ListItem, ListItemText, ListItemSecondaryAction
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+
 import classNames from 'classnames';
 
+import PostsListItemModal from 'components/Posts/PostsListItemModal';
 import { postBookmark, deleteBookmark } from 'store/actions';
 
 const useStyles = makeStyles(theme => ({
+    modal: {
+        position: 'absolute',
+        width: 280,
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[2],
+        padding: theme.spacing(2, 4, 3),
+        top: `50%`,
+        left: `50%`,
+        transform: `translate(-50%, -50%)`,
+        textAlign: 'center'
+    },
+    shareIcons: {
+        display: 'flex',
+        justifyContent: 'space-around'
+    },
     link: {
         textDecoration: 'none',
         color: theme.palette.text.primary,
@@ -29,6 +46,8 @@ const useStyles = makeStyles(theme => ({
 
 const PostListItem = ({ post }) => {
     const classes = useStyles();
+    const [modalOpen, setModalOpen] = React.useState(false);
+
     const dispatch = useDispatch();
     const userBookmarks = useSelector(state => state.app.user.bookmarks);
     const auth = useSelector(state => state.app.auth);
@@ -41,7 +60,15 @@ const PostListItem = ({ post }) => {
             setBookmark(userBookmarks.indexOf(uid) !== -1);
             prevBookmark.current = bookmark;
         }
-    }, [userBookmarks, bookmark, uid]); 
+    }, [userBookmarks, bookmark, uid]);
+
+    const handleModalOpen = () => {
+        setModalOpen(true);
+    };
+    
+    const handleModalClose = () => {
+        setModalOpen(false);
+    };
 
     const handleBookmark = () => {
         const action = bookmark ? deleteBookmark : postBookmark;
@@ -89,17 +116,21 @@ const PostListItem = ({ post }) => {
         <React.Fragment>
             <ListItem>
                 <ListItemText primary={postTitle} secondary={secondary} />
-                {auth && (
                     <ListItemSecondaryAction>
-                        <IconButton onClick={handleBookmark} color="primary">
-                            {bookmark ? (
-                                <Icon fontSize="small" className={classNames('fas fa-bookmark')} />
-                            ) : (
-                                <Icon fontSize="small" className={classNames('far fa-bookmark')} />
-                            )}
+                        <IconButton onClick={handleModalOpen} color="primary">
+                            <Icon fontSize="small" className={classNames('fas fa-share-alt')} />
                         </IconButton>
+                        {auth && (
+                            <IconButton onClick={handleBookmark} color="primary">
+                                {bookmark ? (
+                                    <Icon fontSize="small" className={classNames('fas fa-bookmark')} />
+                                ) : (
+                                    <Icon fontSize="small" className={classNames('far fa-bookmark')} />
+                                )}
+                            </IconButton>
+                        )}
+                        {modalOpen && <PostsListItemModal post={post} onClose={handleModalClose} />}
                     </ListItemSecondaryAction>
-                )}
             </ListItem>
         </React.Fragment>
     );
