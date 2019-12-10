@@ -3,17 +3,13 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    Icon, IconButton, ListItem, ListItemText, ListItemSecondaryAction, Modal, Typography
+    Icon, IconButton, ListItem, ListItemText, ListItemSecondaryAction
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-    FacebookShareButton,
-    TwitterShareButton,
-    EmailShareButton,
-  } from 'react-share';
 
 import classNames from 'classnames';
 
+import PostsListItemModal from 'components/Posts/PostsListItemModal';
 import { postBookmark, deleteBookmark } from 'store/actions';
 
 const useStyles = makeStyles(theme => ({
@@ -50,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 
 const PostListItem = ({ post }) => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [modalOpen, setModalOpen] = React.useState(false);
 
     const dispatch = useDispatch();
     const userBookmarks = useSelector(state => state.user.bookmarks);
@@ -66,12 +62,12 @@ const PostListItem = ({ post }) => {
         }
     }, [userBookmarks, bookmark, uid]);
 
-    const handleOpen = () => {
-        setOpen(true);
+    const handleModalOpen = () => {
+        setModalOpen(true);
     };
     
-    const handleClose = () => {
-        setOpen(false);
+    const handleModalClose = () => {
+        setModalOpen(false);
     };
 
     const handleBookmark = () => {
@@ -120,51 +116,21 @@ const PostListItem = ({ post }) => {
         <React.Fragment>
             <ListItem>
                 <ListItemText primary={postTitle} secondary={secondary} />
-                <Modal
-                    aria-labelledby={`modal-title-${post.uid}`}
-                    open={open}
-                    onClose={handleClose}>
-                    <div className={classes.modal}>
-                        <Typography id={`modal-title-${post.uid}`} gutterBottom>
-                            {post.title}
-                        </Typography>
-                        <Typography gutterBottom>
-                            Share Via
-                        </Typography>
-                        <div className={classes.shareIcons}>
-                            <TwitterShareButton
-                                url={post.link}
-                                title={post.title}>
-                                <Icon fontSize="large" className="fab fa-twitter-square" />
-                            </TwitterShareButton>
-                            <FacebookShareButton
-                                url={post.link}
-                                quote={post.title}>
-                                <Icon fontSize="large" className="fab fa-facebook-square" />
-                            </FacebookShareButton>
-                            <EmailShareButton
-                                url={post.link}
-                                subject={post.title}
-                                body={post.title}>
-                                <Icon fontSize="large" className="fas fa-envelope" />
-                            </EmailShareButton>
-                        </div>
-                    </div>
-                </Modal>
-                {auth && (
                     <ListItemSecondaryAction>
-                        <IconButton onClick={handleOpen} color="primary">
+                        <IconButton onClick={handleModalOpen} color="primary">
                             <Icon fontSize="small" className={classNames('fas fa-share-alt')} />
                         </IconButton>
-                        <IconButton onClick={handleBookmark} color="primary">
-                            {bookmark ? (
-                                <Icon fontSize="small" className={classNames('fas fa-bookmark')} />
-                            ) : (
-                                <Icon fontSize="small" className={classNames('far fa-bookmark')} />
-                            )}
-                        </IconButton>
+                        {auth && (
+                            <IconButton onClick={handleBookmark} color="primary">
+                                {bookmark ? (
+                                    <Icon fontSize="small" className={classNames('fas fa-bookmark')} />
+                                ) : (
+                                    <Icon fontSize="small" className={classNames('far fa-bookmark')} />
+                                )}
+                            </IconButton>
+                        )}
+                        {modalOpen && <PostsListItemModal post={post} onClose={handleModalClose} />}
                     </ListItemSecondaryAction>
-                )}
             </ListItem>
         </React.Fragment>
     );
