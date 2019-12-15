@@ -97,6 +97,15 @@ const WrapperDrawer = ({ open, handleToggle }) => {
                         </ListItemIcon>
                         <ListItemText primary="Bookmarks" />
                     </ListItem>
+                    <ListItem
+                        component={Link} 
+                        className={classes.drawerLink}
+                        to="/views">
+                        <ListItemIcon>
+                            <Icon fontSize="small" className={classNames('fas fa-history', classes.icon)} />
+                        </ListItemIcon>
+                        <ListItemText primary="Viewed Posts" />
+                    </ListItem>
                 </React.Fragment>
             )}
         </List>

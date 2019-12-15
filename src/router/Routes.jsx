@@ -42,6 +42,7 @@ const Categories = (props) => <Posts {...props} endpoint="category" />;
 const Sources = (props) => <Posts {...props} endpoint="source" />;
 const SimilarPosts = (props) => <Posts {...props} endpoint="similar" />;
 const Bookmarks = (props) => <Posts {...props} endpoint="bookmarks" hideSort />;
+const Views = (props) => <Posts {...props} endpoint="views" hideSort />;
 
 const Routes = () => {
     const isAuthenticated = useSelector(state => !!state.app.auth); 
@@ -64,6 +65,11 @@ const Routes = () => {
             <AuthRoute
                 path="/bookmarks"
                 component={Bookmarks} 
+                redirectTo="/login"
+                authenticated={isAuthenticated} />
+            <AuthRoute
+                path="/views"
+                component={Views} 
                 redirectTo="/login"
                 authenticated={isAuthenticated} />
             <AuthRoute
