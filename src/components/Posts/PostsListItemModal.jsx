@@ -1,9 +1,13 @@
 import React from 'react';
+import { useDispatch } from "react-redux";
 import {
-    Divider, Icon, Modal, Typography
+    Divider, Icon, IconButton, Modal, Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
+import { setAlert } from 'store/actions';
 
 import {
     FacebookShareButton,
@@ -12,6 +16,7 @@ import {
     LinkedinShareButton,
     RedditShareButton
   } from 'react-share';
+
 
 const useStyles = makeStyles(theme => ({
     modal: {
@@ -44,6 +49,9 @@ const useStyles = makeStyles(theme => ({
     redditIcon: {
         color: "#FF5700"
     },
+    copyIcon: {
+        color: "#AAAAAA"
+    }
 }));
 
 const shareLink = (post) => post.post_url;
@@ -81,7 +89,7 @@ const ShareItemLinkedin = ({post, classes}) => {
                 className={classNames('fab fa-linkedin-in', classes.linkedinIcon)} />
         </LinkedinShareButton>
     );
-}
+};
 
 const ShareItemReddit = ({post, classes}) => {
     return (
@@ -93,7 +101,7 @@ const ShareItemReddit = ({post, classes}) => {
                 className={classNames('fab fa-reddit', classes.redditIcon)} />
         </RedditShareButton>
     );
-}
+};
 
 const ShareItemEmail = ({post, classes}) => {
     const body = `Take a look at this article via https://www.aggregatereport.com.`
@@ -107,6 +115,21 @@ const ShareItemEmail = ({post, classes}) => {
                 fontSize="large"
                 className={classNames('fa fa-envelope', classes.emailIcon)} />
         </EmailShareButton>
+    );
+};
+
+const ShareItemClipboard = ({post, classes}) => {
+    const dispatch = useDispatch();
+
+    return (
+        <CopyToClipboard
+            text={shareLink(post)}
+            onCopy={() => dispatch(setAlert({ message: 'Link copied!', type: 'INFO' }))}>
+            <Icon
+                component='span'
+                fontSize="large"
+                className={classNames('fa fa-link', classes.copyIcon)} />
+        </CopyToClipboard>
     );
 };
 
@@ -132,6 +155,9 @@ const PostListItemModal = ({ post, onClose }) => {
                     <ShareItemLinkedin post={post} classes={classes} />
                     <ShareItemReddit post={post} classes={classes} />
                     <ShareItemEmail post={post} classes={classes} />
+                    {document.queryCommandSupported('copy') && (
+                        <ShareItemClipboard post={post} classes={classes} />
+                    )}
                 </div>
             </div>
         </Modal>
