@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 
 import PostsListItemModal from 'components/Posts/PostsListItemModal';
-import { postBookmark, deleteBookmark } from 'store/actions';
+import { postBookmark, deleteBookmark, postView } from 'store/actions';
 
 const useStyles = makeStyles(theme => ({
     modal: {
@@ -90,13 +90,20 @@ const PostListItem = ({ post }) => {
         }
     };
 
+    const handleView = () => {
+        if (auth) {
+            dispatch(postView({ uid: uid }));
+        }
+    }
+
     const postTitle = (
         <a
             href={post.link}
             target="_blank"
             rel="noopener noreferrer"
             className={classes.link}
-            dangerouslySetInnerHTML={{__html: post.title}} />
+            dangerouslySetInnerHTML={{__html: post.title}}
+            onClick={handleView} />
     );
 
     let similarLink = null;

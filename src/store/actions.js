@@ -129,21 +129,6 @@ export const getPosts = () => {
     };
 };
 
-export const postView = (payload) => {
-    const apiURL = `${BASE_URL}/view`;
-
-    return async (dispatch, getState) => {
-        const state = getState();
-        const token = get(state.app.auth, 'access_token');
-        try {
-            return fetcher(apiURL, withAuthToken(postConfig(payload), token));
-        }
-        catch (data) {
-            dispatch(setAlert({ message: data.msg, type: ERROR }));
-        }
-    };
-};
-
 export const getBookmarks = (token) => {
     const apiURL = `${BASE_URL}/bookmarks/ids`;
     return async (dispatch) => {
@@ -188,6 +173,19 @@ export const deleteBookmark = (payload) => {
         catch (err) {
             dispatch(setAlert({ message: err.msg, type: ERROR }));
         }
+    };
+};
+
+export const postView = (payload) => {
+    const apiURL = `${BASE_URL}/views`;
+
+    return async (dispatch, getState) => {
+        const state = getState();
+        const token = get(state.app.auth, 'access_token');
+        try {
+            fetcher(apiURL, withAuthToken(postConfig(payload), token));
+        }
+        catch (err) {}
     };
 };
 
