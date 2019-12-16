@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from "react-redux";
 import {
-    Divider, Icon, IconButton, Modal, Typography
+    Divider, Icon, Modal, Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
@@ -30,9 +30,10 @@ const useStyles = makeStyles(theme => ({
         transform: `translate(-50%, -50%)`,
     },
     shareIcons: {
-        marginTop: theme.spacing(2),
+        margin: theme.spacing(1),
         display: 'flex',
-        justifyContent: 'space-around'
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
     },
     twitterIcon: {
         color: "#1da1f2",
@@ -62,9 +63,10 @@ const ShareItemTwitter = ({post, classes}) => {
         <TwitterShareButton
             url={shareLink(post)}
             title={shareTitle(post)}
-            via="AggregateReport">
+            via="AggregateReport"
+            className={classes.shareIcon}>
             <Icon
-                fontSize="large"
+                fontSize="small"
                 className={classNames('fab fa-twitter', classes.twitterIcon)} />
         </TwitterShareButton>
     );
@@ -72,9 +74,9 @@ const ShareItemTwitter = ({post, classes}) => {
 
 const ShareItemFacebook = ({post, classes}) => {
     return (
-        <FacebookShareButton url={shareLink(post)}>
+        <FacebookShareButton url={shareLink(post)} className={classes.shareIcon}>
             <Icon
-                fontSize="large"
+                fontSize="small"
                 className={classNames('fab fa-facebook', classes.facebookIcon)} />
         </FacebookShareButton>
     );
@@ -83,9 +85,10 @@ const ShareItemFacebook = ({post, classes}) => {
 const ShareItemLinkedin = ({post, classes}) => {
     return (
         <LinkedinShareButton
-            url={shareLink(post)}>
+            url={shareLink(post)}
+            className={classes.shareIcon}>
             <Icon
-                fontSize="large"
+                fontSize="small"
                 className={classNames('fab fa-linkedin-in', classes.linkedinIcon)} />
         </LinkedinShareButton>
     );
@@ -95,9 +98,9 @@ const ShareItemReddit = ({post, classes}) => {
     return (
         <RedditShareButton
             url={shareLink(post)}
-            title={post.title}>
+            title={post.title}
+            className={classes.shareIcon}>
             <Icon
-                fontSize="large"
                 className={classNames('fab fa-reddit', classes.redditIcon)} />
         </RedditShareButton>
     );
@@ -110,9 +113,10 @@ const ShareItemEmail = ({post, classes}) => {
             url={shareLink(post)}
             subject={shareTitle(post)}
             body={body}
-            openWindow={true}>
+            openWindow={true}
+            className={classes.shareIcon}>
             <Icon
-                fontSize="large"
+                fontSize="small"
                 className={classNames('fa fa-envelope', classes.emailIcon)} />
         </EmailShareButton>
     );
@@ -127,8 +131,8 @@ const ShareItemClipboard = ({post, classes}) => {
             onCopy={() => dispatch(setAlert({ message: 'Link copied!', type: 'INFO' }))}>
             <Icon
                 component='span'
-                fontSize="large"
-                className={classNames('fa fa-link', classes.copyIcon)} />
+                fontSize="small"
+                className={classNames('fa fa-link', classes.shareIcon, classes.copyIcon)} />
         </CopyToClipboard>
     );
 };
