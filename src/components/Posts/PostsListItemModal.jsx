@@ -64,9 +64,11 @@ const ShareItemTwitter = ({post, classes}) => {
             url={shareLink(post)}
             title={shareTitle(post)}
             via="AggregateReport"
-            className={classes.shareIcon}>
+            className={classes.shareIcon}
+            data-test-id="share-link-twitter">
             <Icon
                 fontSize="small"
+                data-test-id="share-icon-twitter"
                 className={classNames('fab fa-twitter', classes.twitterIcon)} />
         </TwitterShareButton>
     );
@@ -74,9 +76,13 @@ const ShareItemTwitter = ({post, classes}) => {
 
 const ShareItemFacebook = ({post, classes}) => {
     return (
-        <FacebookShareButton url={shareLink(post)} className={classes.shareIcon}>
+        <FacebookShareButton
+            url={shareLink(post)}
+            className={classes.shareIcon}
+            data-test-id="share-link-facebook">
             <Icon
                 fontSize="small"
+                data-test-id="share-icon-facebook"
                 className={classNames('fab fa-facebook', classes.facebookIcon)} />
         </FacebookShareButton>
     );
@@ -86,9 +92,11 @@ const ShareItemLinkedin = ({post, classes}) => {
     return (
         <LinkedinShareButton
             url={shareLink(post)}
-            className={classes.shareIcon}>
+            className={classes.shareIcon}
+            data-test-id="share-link-linkedin">
             <Icon
                 fontSize="small"
+                data-test-id="share-icon-linkedin"
                 className={classNames('fab fa-linkedin-in', classes.linkedinIcon)} />
         </LinkedinShareButton>
     );
@@ -99,8 +107,11 @@ const ShareItemReddit = ({post, classes}) => {
         <RedditShareButton
             url={shareLink(post)}
             title={post.title}
-            className={classes.shareIcon}>
+            className={classes.shareIcon}
+            data-test-id="share-link-reddit">
             <Icon
+                fontSize="small"
+                data-test-id="share-icon-reddit"
                 className={classNames('fab fa-reddit', classes.redditIcon)} />
         </RedditShareButton>
     );
@@ -114,9 +125,11 @@ const ShareItemEmail = ({post, classes}) => {
             subject={shareTitle(post)}
             body={body}
             openWindow={true}
-            className={classes.shareIcon}>
+            className={classes.shareIcon}
+            data-test-id="share-link-email">
             <Icon
                 fontSize="small"
+                data-test-id="share-icon-email"
                 className={classNames('fa fa-envelope', classes.emailIcon)} />
         </EmailShareButton>
     );
@@ -128,10 +141,12 @@ const ShareItemClipboard = ({post, classes}) => {
     return (
         <CopyToClipboard
             text={shareLink(post)}
-            onCopy={() => dispatch(setAlert({ message: 'Link copied!', type: 'INFO' }))}>
+            onCopy={() => dispatch(setAlert({ message: 'Link copied!', type: 'INFO' }))}
+            data-test-id="share-link-clipboard">
             <Icon
                 component='span'
                 fontSize="small"
+                data-test-id="share-icon-clipboard"
                 className={classNames('fa fa-link', classes.shareIcon, classes.copyIcon)} />
         </CopyToClipboard>
     );
@@ -140,16 +155,25 @@ const ShareItemClipboard = ({post, classes}) => {
 const PostListItemModal = ({ post, onClose }) => {
     const classes = useStyles();
 
+    const supportsCopy = "queryCommandSupported" in document && document.queryCommandSupported;
+
     return (
         <Modal
             aria-labelledby={`modal-title-${post.uid}`}
             open={true}
-            onClose={onClose}>
+            onClose={onClose}
+            data-test-id="share-modal">
             <div className={classes.modal}>
-                <Typography gutterBottom variant="h5">
+                <Typography
+                    variant="h5"
+                    gutterBottom
+                    data-test-id="share-modal-title">
                     Share Link
                 </Typography>
-                <Typography id={`modal-title-${post.uid}`} gutterBottom>
+                <Typography
+                    id={`modal-title-${post.uid}`}
+                    data-test-id="share-modal-link"
+                    gutterBottom>
                     {shareTitle(post)}
                 </Typography>
                 <Divider />
@@ -159,9 +183,7 @@ const PostListItemModal = ({ post, onClose }) => {
                     <ShareItemLinkedin post={post} classes={classes} />
                     <ShareItemReddit post={post} classes={classes} />
                     <ShareItemEmail post={post} classes={classes} />
-                    {document.queryCommandSupported('copy') && (
-                        <ShareItemClipboard post={post} classes={classes} />
-                    )}
+                    {supportsCopy && <ShareItemClipboard post={post} classes={classes} />}
                 </div>
             </div>
         </Modal>
