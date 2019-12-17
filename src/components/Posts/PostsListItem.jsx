@@ -106,18 +106,6 @@ const PostListItem = ({ post }) => {
             onClick={handleView} />
     );
 
-    let similarLink = null;
-    if (post.similar_count > 1) {
-        similarLink = (
-            <React.Fragment>
-                &nbsp;&bull;&nbsp;
-                <Link to={`/similar/${post.uid}`} className={classes.detailLink}>
-                    Related Posts
-                </Link>
-            </React.Fragment>
-        );
-    }
-
     const secondary = (
         <span className={classes.postDetails}>
             {moment(post.published_datetime).fromNow()}
@@ -129,7 +117,10 @@ const PostListItem = ({ post }) => {
             <Link to={`/category/${post.feed.category.slug}`} className={classes.detailLink}>
                 {post.feed.category.title}
             </Link>
-            {similarLink}
+            &nbsp;&bull;&nbsp;
+            <Link to={`/similar/${post.uid}`} className={classes.detailLink}>
+                More Coverage
+            </Link>
         </span>
     )
 
