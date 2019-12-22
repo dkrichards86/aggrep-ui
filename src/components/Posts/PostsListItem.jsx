@@ -117,10 +117,6 @@ const PostListItem = ({ post }) => {
             <Link to={`/category/${post.feed.category.slug}`} className={classes.detailLink}>
                 {post.feed.category.title}
             </Link>
-            &nbsp;&bull;&nbsp;
-            <Link to={`/similar/${post.uid}`} className={classes.detailLink}>
-                More Coverage
-            </Link>
         </span>
     )
 
@@ -140,12 +136,17 @@ const PostListItem = ({ post }) => {
                 keepMounted
                 open={Boolean(menuAnchor)}
                 onClose={handleMenuClose}>
-                <MenuItem component='a' href={post.link}>View Article</MenuItem>
+                <MenuItem component='a' href={post.link}>
+                    View Article
+                </MenuItem>
                 <MenuItem onClick={handleModalOpen}>
                     Share Article
                 </MenuItem>
                 <MenuItem onClick={handleBookmark}>
                     {bookmark ? "Remove Bookmark" : "Bookmark"}
+                </MenuItem>
+                <MenuItem component='Link' to={`/similar/${post.uid}`}>
+                    Related Coverage
                 </MenuItem>
             </Menu>
         </React.Fragment>
