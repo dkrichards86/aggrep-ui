@@ -145,7 +145,7 @@ const PostListItem = ({ post }) => {
                 <MenuItem onClick={handleBookmark}>
                     {bookmark ? "Remove Bookmark" : "Bookmark"}
                 </MenuItem>
-                <MenuItem component='Link' to={`/similar/${post.uid}`}>
+                <MenuItem component={Link} to={`/similar/${post.uid}`}>
                     Related Coverage
                 </MenuItem>
             </Menu>
