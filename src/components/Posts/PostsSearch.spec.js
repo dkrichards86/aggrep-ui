@@ -38,8 +38,6 @@ describe('<PostsSearch />', () => {
         expect(wrapper.find('[data-test-id="query-input"]').props().value).toEqual('foobar');
         expect(wrapper.find('[data-test-id="query-input"]').props().error).toBeFalsy();
         expect(wrapper.find('[data-test-id="query-input"]').props().helperText).toBeFalsy();
-
-        expect(wrapper.contains(<PostsList />)).toBe(true);
     });
 
     it('shows errors on empty inputs', () => {
