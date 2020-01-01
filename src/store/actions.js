@@ -129,6 +129,44 @@ export const getPosts = () => {
     };
 };
 
+export const searchPosts = (query) => {
+    return async (dispatch, getState) => {
+        const state = getState();
+        const filters = state.app.filters;
+
+        dispatch(setLoading(true));
+
+        let args = []
+
+        args.push(`query=${encodeURI(query)}`);
+
+        if (filters.page) {
+            args.push(`page=${filters.page}`);
+        }
+
+        if (filters.per_page) {
+            args.push(`per_page=${filters.per_page}`);
+        }
+
+        let apiURL = `${BASE_URL}/search`;
+
+        if (args.length) {
+            apiURL += `?${args.join("&")}`;
+        }
+
+        const token = get(state.app.auth, 'access_token');
+        try {
+            const data = await fetcher(apiURL, withAuthToken(getConfig(), token));
+            dispatch(storePosts(data));
+            dispatch(setLoading(false));
+        }
+        catch (err) {
+            dispatch(setLoading(false));
+            dispatch(setAlert({ message: err.msg, type: ERROR }));
+        }
+    };
+};
+
 export const getBookmarks = (token) => {
     const apiURL = `${BASE_URL}/bookmarks/ids`;
     return async (dispatch) => {
