@@ -41,7 +41,7 @@ const Posts = ({ endpoint, hideSort }) => {
                 sort: filters.sort,
             }));
         }
-    }, [endpoint, slug, filters, dispatch]); 
+    }, [endpoint, slug, filters, dispatch]);
 
     const prevFilters = useRef(filters);
     useEffect(() => {

@@ -17,6 +17,10 @@ const useStyles = makeStyles(() => ({
     root: {
         maxWidth: 800,
         margin: '0 auto'
+    },
+    bottomButtons: {
+        display: 'flex',
+        justifyContent: 'space-between'
     }
 }));
 
@@ -96,9 +100,14 @@ const AuthLogin = () => {
                     </FormButton>
                 </FormButtonGroup>
             </Form>
-            <Button component={Link} to='/forgot'>
-                Forgot Password
-            </Button>
+            <div className={classes.bottomButtons}>
+                <Button component={Link} to='/forgot'>
+                    Forgot your password?
+                </Button>
+                <Button component={Link} to='/register'>
+                    Create an account
+                </Button>
+            </div>
         </div>
     );
 };

@@ -98,6 +98,12 @@ const Layout = ({ children }) => {
         rightAction = (
             <React.Fragment>
                 <Button
+                    component={Link}
+                    to='/search'
+                    color="inherit">
+                    <Icon className="fas fa-search" />
+                </Button>
+                <Button
                     aria-controls="user-menu"
                     aria-haspopup="true"
                     onClick={handleClick}
@@ -132,8 +138,11 @@ const Layout = ({ children }) => {
      } else if (!isHydrating) {
         rightAction = (
             <React.Fragment>
-                <Button color="inherit" component={Link} to='/register'>
-                    Sign Up
+                <Button
+                    component={Link}
+                    to='/search'
+                    color="inherit">
+                    <Icon className="fas fa-search" />
                 </Button>
                 <Button variant="outlined" color="inherit" component={Link} to='/login'>
                     Sign In

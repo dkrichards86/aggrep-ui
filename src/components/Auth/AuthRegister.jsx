@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { trackEvent } from '@redux-beacon/google-analytics-gtag';
+import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import isEmpty from 'lodash/isEmpty';
 import Form from 'components/Common/Form';
@@ -16,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: 800,
         margin: '0 auto'
+    },
+    bottomButtons: {
+        display: 'flex',
+        justifyContent: 'space-between'
     }
 }));
 
@@ -121,6 +126,12 @@ const AuthRegister = () => {
                     </FormButton>
                 </FormButtonGroup>
             </Form>
+            <div className={classes.bottomButtons}>
+                <div />
+                <Button component={Link} to='/login'>
+                    Sign in to your account
+                </Button>
+            </div>
         </div>
     );
 };

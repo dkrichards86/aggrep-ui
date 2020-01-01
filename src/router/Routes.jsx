@@ -12,6 +12,7 @@ import AuthUpdateEmail from 'components/Auth/AuthUpdateEmail';
 import ManageCategories from'components/Manage/ManageCategories';
 import ManageSources from 'components/Manage/ManageSources';
 import Posts from 'components/Posts/Posts';
+import PostsSearch from 'components/Posts/PostsSearch';
 
 const AuthRoute = ({ component: Component, authenticated, redirectTo, ...rest}) => (
     <Route
@@ -62,6 +63,9 @@ const Routes = () => {
             <Route
                 path="/similar/:slug"
                 component={SimilarPosts} />
+            <Route
+                path="/search"
+                component={PostsSearch} />
             <AuthRoute
                 path="/bookmarks"
                 component={Bookmarks} 
