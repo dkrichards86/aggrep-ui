@@ -1,8 +1,8 @@
 const STORAGE_PREFIX = 'aggrep_storage';
 
-const generate_storage_key = (key) => `${STORAGE_PREFIX}_${key}`;
+const generate_storage_key = (key:string):string => `${STORAGE_PREFIX}_${key}`;
 
-export const loadSetting = (key) => {
+export const loadSetting = (key:string):object|null => {
   const storedData = localStorage.getItem(generate_storage_key(key));
 
   if (storedData) {
@@ -12,10 +12,10 @@ export const loadSetting = (key) => {
   return null;
 };
 
-export const saveSetting = (key, newData) => {
+export const saveSetting = (key:string, newData:any):void => {
   localStorage.setItem(generate_storage_key(key),  JSON.stringify(newData));
 };
 
-export const removeSetting = (key, newData) => {
+export const removeSetting = (key:string):void => {
   localStorage.removeItem(generate_storage_key(key));
 };
