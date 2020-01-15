@@ -74,7 +74,7 @@ interface WrapperProps {
     children: React.ReactNode;
 };
 
-const Layout: React.FunctionComponent<WrapperProps> = ({ children }) => {
+const Wrapper: React.FunctionComponent<WrapperProps> = ({ children }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { pathname } = useLocation();
@@ -103,12 +103,6 @@ const Layout: React.FunctionComponent<WrapperProps> = ({ children }) => {
     if (!hydrating && auth) {
         rightAction = (
             <React.Fragment>
-                <Button
-                    component={Link}
-                    to='/search'
-                    color="inherit">
-                    <Icon className="fas fa-search" />
-                </Button>
                 <Button
                     aria-controls="user-menu"
                     aria-haspopup="true"
@@ -143,13 +137,7 @@ const Layout: React.FunctionComponent<WrapperProps> = ({ children }) => {
      } else if (!hydrating) {
         rightAction = (
             <React.Fragment>
-                <Button
-                    component={Link}
-                    to='/search'
-                    color="inherit">
-                    <Icon className="fas fa-search" />
-                </Button>
-                <Button variant="outlined" color="inherit" component={Link} to='/login'>
+                <Button size="small" variant="outlined" color="inherit" component={Link} to='/login'>
                     Sign In
                 </Button>
             </React.Fragment>
@@ -214,4 +202,4 @@ const Layout: React.FunctionComponent<WrapperProps> = ({ children }) => {
     );
 };
 
-export default Layout;
+export default Wrapper;

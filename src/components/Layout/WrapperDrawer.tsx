@@ -96,6 +96,18 @@ const WrapperDrawer: React.FunctionComponent<WrapperDrawerProps> = ({ open, hand
                     <ListItemText primary={c.title} />
                 </ListItem>
             ))}
+            <Divider />
+            <ListItem
+                component={Link} 
+                className={classes.drawerLink}
+                to="/search">
+                <ListItemIcon>
+                    <Icon
+                        fontSize="small"
+                        className={classNames('fas fa-search', classes.icon)} />
+                </ListItemIcon>
+                <ListItemText primary="Search" />
+            </ListItem>
             {auth && (
                 <React.Fragment>
                     <Divider />
