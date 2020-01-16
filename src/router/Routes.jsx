@@ -46,8 +46,8 @@ const Bookmarks = (props) => <Posts {...props} endpoint="bookmarks" hideSort />;
 const Views = (props) => <Posts {...props} endpoint="views" hideSort />;
 
 const Routes = () => {
-    const isAuthenticated = useSelector(state => !!state.app.auth); 
-    
+    const isAuthenticated = useSelector(state => !!state.auth); 
+
     return (
         <div>
             <Route
