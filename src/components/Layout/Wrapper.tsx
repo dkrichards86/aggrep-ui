@@ -103,18 +103,26 @@ const Wrapper: React.FunctionComponent<WrapperProps> = ({ children }) => {
     if (!hydrating && auth) {
         rightAction = (
             <React.Fragment>
-                <Button
-                    aria-controls="user-menu"
-                    aria-haspopup="true"
-                    onClick={handleClick}
-                    color="inherit">
-                    <Hidden smUp implementation="css">
+                <Hidden smUp implementation="css">
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        aria-controls="user-menu"
+                        aria-haspopup="true"
+                        onClick={handleClick}>
                         <Icon className="fas fa-user-circle" />
-                    </Hidden>
-                    <Hidden xsDown implementation="css">
+                    </IconButton>
+                </Hidden>
+                <Hidden xsDown implementation="css">
+                    <Button
+                        aria-controls="user-menu"
+                        aria-haspopup="true"
+                        onClick={handleClick}
+                        color="inherit">
                         {auth.user.email}
-                    </Hidden>
-                </Button>
+                    </Button>
+                </Hidden>
                 <Menu
                     id="user-menu"
                     anchorEl={menuAnchor}
@@ -134,7 +142,7 @@ const Wrapper: React.FunctionComponent<WrapperProps> = ({ children }) => {
                 </Menu>
             </React.Fragment>
         );
-     } else if (!hydrating) {
+    } else if (!hydrating) {
         rightAction = (
             <React.Fragment>
                 <Button size="small" variant="outlined" color="inherit" component={Link} to='/login'>
