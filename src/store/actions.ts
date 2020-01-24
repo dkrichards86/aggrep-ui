@@ -62,10 +62,6 @@ export const setFilter = (key:string, value:any): AppThunk => async (dispatch) =
         dispatch(removeFilter('page'));
     }
 
-    if (key === 'per_page') {
-        saveSetting('per_page', value);
-    }
-
     if (key === 'sort') {
         saveSetting('sort', value);
     }
@@ -89,10 +85,6 @@ export const getPosts = (): AppThunk => async (dispatch, getState) => {
 
     if (filters.page) {
         args.push(`page=${filters.page}`);
-    }
-
-    if (filters.per_page) {
-        args.push(`per_page=${filters.per_page}`);
     }
 
     if (filters.sort && filters.endpoint !== 'bookmarks') {
@@ -132,10 +124,6 @@ export const searchPosts = (query: string): AppThunk => async (dispatch, getStat
 
     if (filters.page) {
         args.push(`page=${filters.page}`);
-    }
-
-    if (filters.per_page) {
-        args.push(`per_page=${filters.per_page}`);
     }
 
     let apiURL = `${BASE_URL}/search`;

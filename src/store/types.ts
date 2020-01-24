@@ -65,7 +65,6 @@ export interface FiltersType {
     endpoint: string | null | undefined;
     slug: string | null | undefined;
     page: number | null | undefined;
-    per_page: number | null | undefined;
     sort: string | null | undefined;
 };
 
