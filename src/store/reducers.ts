@@ -6,7 +6,7 @@ import {
     UPDATE_HYDRATING, STORE_USER_CATEGORIES, STORE_USER_SOURCES, STORE_SOURCES, STORE_CATEGORIES,
     UPDATE_ALERT, STORE_USER_BOOKMARKS, BULK_SET_FILTERS
 } from './reducer_types';
-import { DEFAULT_SORT, DEFAULT_PER_PAGE } from '../constants';
+import { DEFAULT_SORT } from '../constants';
 import { loadSetting, removeSetting, saveSetting } from 'store/storage';
 import { AppStateType, FilterValueType, FiltersType } from 'store/types';
 
@@ -14,7 +14,6 @@ const defaultFilters:FiltersType = {
     endpoint: 'posts',
     slug: null,
     page: 1,
-    per_page: loadSetting('per_page') || DEFAULT_PER_PAGE,
     sort: loadSetting('sort') || DEFAULT_SORT,
 };
 
@@ -24,7 +23,6 @@ export const initialState:AppStateType = {
         endpoint: 'posts',
         slug: null,
         page: 1,
-        per_page: loadSetting('per_page') || DEFAULT_PER_PAGE,
         sort: loadSetting('sort') || DEFAULT_SORT,
     },
     loading: true,

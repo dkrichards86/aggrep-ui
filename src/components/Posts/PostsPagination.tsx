@@ -20,15 +20,10 @@ const PostPagination:React.FunctionComponent = () => {
     const dispatch = useDispatch();
     const numPages = useSelector((state: RootState) => state.posts.total_pages);
     const pageNumber = useSelector((state: RootState) => state.posts.page);
-    const perPage = useSelector((state: RootState) => state.posts.per_page);
     const postCount = useSelector((state: RootState) => state.posts.total_items)
 
     const handleChangePage = (_:any, newPage: number):void => {
         dispatch(setFilter('page', newPage + 1));
-    };
-
-    const handleChangePerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>):void => {
-        dispatch(setFilter('per_page', event.target.value));
     };
 
     let pagination = null;
@@ -38,11 +33,11 @@ const PostPagination:React.FunctionComponent = () => {
                 classes={{
                     toolbar: classes.root,
                 }}
-                rowsPerPageOptions={[10, 20, 50]}
+                rowsPerPageOptions={[20]}
                 component="div"
                 count={postCount}
                 page={pageNumber - 1}
-                rowsPerPage={perPage}
+                rowsPerPage={20}
                 labelRowsPerPage="Posts to show: "
                 backIconButtonProps={{
                     'aria-label': 'previous page',
@@ -51,7 +46,6 @@ const PostPagination:React.FunctionComponent = () => {
                     'aria-label': 'next page',
                 }}
                 onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangePerPage}
             />
         );
     }

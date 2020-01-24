@@ -44,7 +44,6 @@ const Posts:React.FunctionComponent<PostProps> = ({ endpoint, hideSort }) => {
                 {key: 'endpoint', value: endpoint},
                 {key: 'slug', value: slug},
                 {key: 'page', value: 1},
-                {key: 'per_page', value: filters.per_page},
                 {key: 'sort', value: filters.sort},
             ]));
         }

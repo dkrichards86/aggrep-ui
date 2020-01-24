@@ -46,7 +46,6 @@ const PostsSearch:React.FunctionComponent = () => {
                 {key: 'endpoint', value: 'search'},
                 {key: 'slug', value: null},
                 {key: 'page', value: 1},
-                {key: 'per_page', value: filters.per_page},
                 {key: 'sort', value: filters.sort},
             ]));
         }
