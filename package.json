@@ -14,7 +14,7 @@
     "classnames": "^2.2.6",
     "history": "^4.10.1",
     "ignore-styles": "^5.0.1",
-    "lodash": "4.17.15",
+    "lodash": "4.17.19",
     "moment": "2.24.0",
     "react": "^16.11.0",
     "react-copy-to-clipboard": "^5.0.2",
